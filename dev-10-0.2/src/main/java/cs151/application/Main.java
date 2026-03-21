@@ -15,7 +15,7 @@ public class Main extends Application {
         primaryStage = stage;
 
         //this is data base method, gotta put it before the ui
-        DataBase.init();
+        DataBase.initializeDatabase();
 
         showHomePage();//home page is shown first
         stage.show();

@@ -1,16 +1,19 @@
 package cs151.application;
 
-public class Deck
-{
-    //Simple deck class with private fields
+public class Deck {
     private int id;
     private String name;
-    private String desc;
+    private String description;
 
-    public Deck(int id, String name, String desc) {
+    public Deck(int id, String name, String description) {
         this.id = id;
         this.name = name;
-        this.desc = desc;
+        this.description = description;
+    }
+
+    public Deck(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
     public int getId() {
@@ -29,13 +32,11 @@ public class Deck
         this.name = name;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
-
-
 }

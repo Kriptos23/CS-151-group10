@@ -15,7 +15,7 @@ public class DeckDAO {
              PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, deck.getName().trim());
-            ps.setString(2, deck.getDesc());
+            ps.setString(2, deck.getDescription());
 
             ps.executeUpdate();
 
@@ -26,10 +26,29 @@ public class DeckDAO {
         return 0;
     }
 
+    public boolean deckNameExists(String name) throws Exception {
+        String sql = "SELECT COUNT(*) FROM decks WHERE LOWER(TRIM(name)) = LOWER(TRIM(?))";
+
+        try (Connection conn = DataBase.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, name);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() && rs.getInt(1) > 0;
+            }
+        }
+    }
+
     //should be able to find decks
     public List<Deck> findAll() throws Exception {
-        String sql = "SELECT id, name, description FROM decks ORDER BY name";
         List<Deck> decks = new ArrayList<>();
+
+        String sql = """
+                SELECT id, name, description
+                FROM decks
+                ORDER BY LOWER(name) ASC
+                """;
 
         try (Connection conn = DataBase.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -43,6 +62,7 @@ public class DeckDAO {
                 ));
             }
         }
+
         return decks;
     }
 

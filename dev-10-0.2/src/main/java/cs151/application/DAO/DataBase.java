@@ -14,7 +14,7 @@ public class DataBase {
     }
 
     // Call this once when app starts
-    public static void init() {
+    public static void initializeDatabase() {
         String createDeckTable = """
             CREATE TABLE IF NOT EXISTS decks (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -42,6 +42,7 @@ public class DataBase {
              Statement stmt = conn.createStatement()) {
             stmt.execute(createDeckTable);
             stmt.execute(createFlashcardTable);
+            System.out.println("Database ready.");
         } catch (Exception e) {
             throw new RuntimeException("DB init failed", e);
         }

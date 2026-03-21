@@ -1,38 +1,67 @@
 package cs151.application.controller;
 
+import cs151.application.Deck;
 import cs151.application.Main;
 import cs151.application.DAO.DeckDAO;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+
+import java.util.List;
 
 public class HomeController {
 
     @FXML
     private Label statusLabel;
 
-    //for now only shows for count == 0
+    @FXML
+    private TableView<Deck> deckTable;
+
+    @FXML
+    private TableColumn<Deck, Integer> idColumn;
+
+    @FXML
+    private TableColumn<Deck, String> nameColumn;
+
+    @FXML
+    private TableColumn<Deck, String> descriptionColumn;
+
+    private final DeckDAO deckDAO = new DeckDAO();
+
     @FXML
     public void initialize() {
-        try {
-            DeckDAO dao = new DeckDAO();
-            int count = dao.findAll().size();
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
 
-            if (count == 0) {
+        loadDecks();
+    }
+
+    private void loadDecks() {
+        try {
+            List<Deck> decks = deckDAO.findAll();
+            deckTable.setItems(FXCollections.observableArrayList(decks));
+
+            if (decks.isEmpty()) {
                 statusLabel.setText("No decks yet. Create your first deck to get started.");
-            } else if (count == 1) {
-                statusLabel.setText("You have 1 deck.");
             } else {
-                statusLabel.setText("You have " + count + " decks.");
+                statusLabel.setText("Stored decks:");
             }
         } catch (Exception e) {
-            statusLabel.setText("Unable to load decks.");
             e.printStackTrace();
+            statusLabel.setText("Could not load decks.");
         }
     }
 
-    //goes to the define deck page
     @FXML
-    public void goToDefineDeck() throws Exception {
-        Main.showDefineDeckPage();
+    public void goToDefineDeck() {
+        try {
+            Main.showDefineDeckPage();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
