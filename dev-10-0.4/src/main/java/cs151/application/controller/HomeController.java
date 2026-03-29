@@ -14,36 +14,44 @@ import java.util.List;
 
 public class HomeController {
 
+
     @FXML
     private Label statusLabel;
+
 
     @FXML
     private TableView<Deck> deckTable;
 
+
     @FXML
     private TableColumn<Deck, Integer> idColumn;
+
 
     @FXML
     private TableColumn<Deck, String> nameColumn;
 
+
     @FXML
     private TableColumn<Deck, String> descriptionColumn;
 
+
     private final DeckDAO deckDAO = new DeckDAO();
+
 
     @FXML
     public void initialize() {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-
         loadDecks();
     }
+
 
     private void loadDecks() {
         try {
             List<Deck> decks = deckDAO.findAll();
             deckTable.setItems(FXCollections.observableArrayList(decks));
+
 
             if (decks.isEmpty()) {
                 statusLabel.setText("No decks yet. Create your first deck to get started.");
@@ -56,10 +64,31 @@ public class HomeController {
         }
     }
 
+
     @FXML
     public void goToDefineDeck() {
         try {
             Main.showDefineDeckPage();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    public void goToDefineFlashcard() {
+        try {
+            Main.showDefineFlashcardPage();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    public void goToListFlashcards() {
+        try {
+            Main.showListFlashcardsPage();
         } catch (Exception e) {
             e.printStackTrace();
         }

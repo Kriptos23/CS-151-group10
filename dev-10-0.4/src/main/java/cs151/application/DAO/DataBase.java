@@ -1,19 +1,22 @@
 package cs151.application.DAO;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
-/// DataBase class, for not nothing much yet, doesn't save any data yet
-
 public class DataBase {
-    private static final String DB_URL = "jdbc:sqlite:flashcards.db";
+    private static final String DB_FOLDER = "data";
+    private static final String DB_URL = "jdbc:sqlite:" + DB_FOLDER + "/flashcards.db";
 
     public static Connection getConnection() throws Exception {
+        File folder = new File(DB_FOLDER);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
         return DriverManager.getConnection(DB_URL);
     }
 
-    // Call this once when app starts
     public static void initializeDatabase() {
         String createDeckTable = """
             CREATE TABLE IF NOT EXISTS decks (
@@ -23,7 +26,6 @@ public class DataBase {
             );
         """;
 
-        // Later you can add flashcards table too
         String createFlashcardTable = """
             CREATE TABLE IF NOT EXISTS flashcards (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -44,6 +46,7 @@ public class DataBase {
             stmt.execute(createFlashcardTable);
             System.out.println("Database ready.");
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException("DB init failed", e);
         }
     }

@@ -45,10 +45,10 @@ public class DeckDAO {
         List<Deck> decks = new ArrayList<>();
 
         String sql = """
-                SELECT id, name, description
-                FROM decks
-                ORDER BY LOWER(name) ASC
-                """;
+            SELECT id, name, description
+            FROM decks
+            ORDER BY LOWER(name) ASC
+            """;
 
         try (Connection conn = DataBase.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -65,7 +65,6 @@ public class DeckDAO {
 
         return decks;
     }
-
     //should be able to delete deck
     public void deleteById(int id) throws Exception {
         String sql = "DELETE FROM decks WHERE id = ?";
