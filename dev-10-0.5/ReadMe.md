@@ -3,6 +3,12 @@
 
 # who did what:
 
+# Version: 0.5
+
+1. Daniel Kuvanychbekov: Contributed equally, Implemented FlashCard creation, validation, and SQLite persistence, along with displaying decks in a JavaFX TableView.
+2. Herga Aman Kedlaya: Contributed equally, Implemented FlashCard creation, validation, and SQLite persistence, along with displaying decks in a JavaFX TableView.
+3. Sally Araujo: Contributed equally, Implemented FlashCard creation, validation, and SQLite persistence, along with displaying decks in a JavaFX TableView.
+
 # Version: 0.4
 
 1. Daniel Kuvanychbekov: Contributed equally, Implemented deck creation, validation, and SQLite persistence, along with displaying decks in a JavaFX TableView. 
